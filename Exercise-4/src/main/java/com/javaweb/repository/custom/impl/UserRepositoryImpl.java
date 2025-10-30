@@ -1,9 +1,11 @@
 package com.javaweb.repository.custom.impl;
 
+import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.UserEntity;
 import com.javaweb.repository.custom.UserRepositoryCustom;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -41,6 +43,13 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 		String sql = buildQueryFilter();
 		Query query = entityManager.createNativeQuery(sql.toString());
 		return query.getResultList().size();
+	}
+	@Transactional
+	@Override
+	public List<UserEntity> findUsersByBuilding(BuildingEntity buildingEntity) {
+		String sql = "Select u.* from user u JOIN assignmentbuilding a ON a.staffid = u.id JOIN building b ON b.id = a.building id WHERE b.id = " + buildingEntity.getId();
+		Query query = entityManager.createNativeQuery(sql);
+		return query.getResultList();
 	}
 
 	private String buildQueryFilter() {

@@ -4,7 +4,9 @@ import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.UserEntity;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.StaffResponseDTO;
+import com.javaweb.repository.AssignmentBuildingRepository;
 import com.javaweb.repository.BuildingRepository;
+import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +21,16 @@ public class BuildingServiceImpl implements BuildingService {
     public BuildingRepository buildingRepository;
     @Autowired
     public UserRepository userRepository;
+    @Autowired
+    public RentAreaRepository rentAreaRepository;
+    @Autowired
+    public AssignmentBuildingRepository assignmentBuildingRepository;
     @Override
     public ResponseDTO listStaffs(Long buildingId) {
         BuildingEntity building = buildingRepository.findById(buildingId).get();
         List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1,"STAFF");
-        List<UserEntity> staffAssignment = building.getUserEntities();
+        List<UserEntity> staffAssignment = userRepository.findUsersByBuilding(building);
+//        List<UserEntity> staffAssignment = building.getUserEntities();
         List<StaffResponseDTO> staffResponseDTOS = new ArrayList<>();
         ResponseDTO responseDTO = new ResponseDTO();
         for (UserEntity it : staffs){

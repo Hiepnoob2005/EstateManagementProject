@@ -6,6 +6,7 @@ import com.javaweb.repository.custom.BuildingRepositoryCustom;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -91,6 +92,21 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
             where.append(" ) ");
         }
     }
+    @Transactional
+    @Override
+    public void deleteAssignmentByBuildingId(BuildingEntity buildingEntity) {
+        String sql = "DELETE assignmentbuilding a where a.buildingid = " + buildingEntity.getId();
+        Query query = entityManager.createNativeQuery(sql);
+        query.executeUpdate();
+    }
+    @Transactional
+    @Override
+    public void deleteRentAreaByBuildingId(BuildingEntity buildingEntity) {
+        String sql = "DELETE rentarea r WHERE r.building = " + buildingEntity.getId();
+        Query query = entityManager.createNativeQuery(sql);
+        query.executeUpdate();
+    }
+
     @Override
     public List<BuildingEntity> findAll(BuildingSearchBuilder buildingSearchBuilder) {
         StringBuilder sql = new StringBuilder("SELECT b.* from building b ");

@@ -90,8 +90,8 @@ public class BuildingEntity {
 //    @Column(name = "map")
 //    private String map;
 
-//    @Column(name = "image")
-//    private String image;
+    @Column(name = "image")
+    private String image;
 
     @Column(name = "createddate")
     private Date createddate;
@@ -123,10 +123,21 @@ public class BuildingEntity {
     @OneToMany(mappedBy = "building",fetch = FetchType.LAZY)
     private List<RentAreaEntity> items = new ArrayList<>();
 
+    public List<RentAreaEntity> getItems() {
+        return items;
+    }
 
+    public void setItems(List<RentAreaEntity> items) {
+        this.items = items;
+    }
 
+    public String getImage() {
+        return image;
+    }
 
-
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public Long getId() {
         return id;
