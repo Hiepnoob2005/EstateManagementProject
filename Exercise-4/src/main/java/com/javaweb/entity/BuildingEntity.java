@@ -1,5 +1,7 @@
 package com.javaweb.entity;
 
+import org.hibernate.mapping.Join;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -113,16 +115,16 @@ public class BuildingEntity {
 
 
     //join vs assignmentbuilding
+   @OneToMany(mappedBy = "building",fetch = FetchType.LAZY)
+   private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
+
+    //join vs rentarea
+
+    @OneToMany(mappedBy = "building",fetch = FetchType.LAZY)
+    private List<RentAreaEntity> items = new ArrayList<>();
 
 
 
-
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "assignmentbuilding",
-            joinColumns = @JoinColumn(name = "buildingid", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
-    private List<UserEntity> userEntities = new ArrayList<>();
 
 
 
@@ -334,13 +336,13 @@ public class BuildingEntity {
         this.managerphone = managerphonenumber;
     }
 
-    public List<UserEntity> getUserEntities() {
-        return userEntities;
-    }
-
-    public void setUserEntities(List<UserEntity> userEntities) {
-        this.userEntities = userEntities;
-    }
+//    public List<UserEntity> getUserEntities() {
+//        return userEntities;
+//    }
+//
+//    public void setUserEntities(List<UserEntity> userEntities) {
+//        this.userEntities = userEntities;
+//    }
     //    public List<UserEntity> getUserEntities() {
 //        return userEntities;
 //    }
@@ -349,13 +351,13 @@ public class BuildingEntity {
 //        this.userEntities = userEntities;
 //    }
 
-//    public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
-//        return assignmentBuildingEntities;
-//    }
-//
-//    public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
-//        this.assignmentBuildingEntities = assignmentBuildingEntities;
-//    }
+    public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
+        return assignmentBuildingEntities;
+    }
+
+    public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
+        this.assignmentBuildingEntities = assignmentBuildingEntities;
+    }
 
     public String getMotofee() {
         return motofee;
@@ -414,12 +416,6 @@ public class BuildingEntity {
 //        this.image = image;
 //    }
 
-    //    @ManyToOne
-//    @JoinColumn (name="districtid")
-//    private DistrictEntity district;
-//
-//    @OneToMany(mappedBy="building",fetch = FetchType.LAZY)
-//    private List<rentareaEntity>items = new ArrayList<>();
 
 //
 
