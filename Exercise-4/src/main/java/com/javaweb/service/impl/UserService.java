@@ -2,11 +2,16 @@ package com.javaweb.service.impl;
 
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.converter.UserConverter;
+import com.javaweb.entity.AssignmentBuildingEntity;
+import com.javaweb.entity.BuildingEntity;
+import com.javaweb.model.dto.AssignmentBuildingDTO;
 import com.javaweb.model.dto.PasswordDTO;
 import com.javaweb.model.dto.UserDTO;
 import com.javaweb.entity.RoleEntity;
 import com.javaweb.entity.UserEntity;
 import com.javaweb.exception.MyException;
+import com.javaweb.repository.AssignmentBuildingRepository;
+import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.RoleRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.service.IUserService;
@@ -18,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +33,6 @@ import java.util.stream.Stream;
 
 @Service
 public class UserService implements IUserService {
-
     @Autowired
     private UserRepository userRepository;
 
@@ -39,9 +44,11 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserConverter userConverter;
+    @Autowired
+    private BuildingRepository buildingRepository;
 
-
-
+    @Autowired
+    private AssignmentBuildingRepository assignmentBuildingRepository;
     @Override
     public UserDTO findOneByUserNameAndStatus(String name, int status) {
         return userConverter.convertToDto(userRepository.findOneByUserNameAndStatus(name, status));
@@ -92,6 +99,20 @@ public class UserService implements IUserService {
             listStaffs.put(it.getId(),it.getFullName());
         }
         return listStaffs;
+    }
+
+    @Override
+    @Transactional
+    public void updateAssignmentBuilding(AssignmentBuildingDTO assignmentBuildingDTO) {
+        BuildingEntity building = buildingRepository.findById(assignmentBuildingDTO.getBuildingId()).get();
+        assignmentBuildingRepository.deleteAssignmentBuildingEntityByBuilding(building);
+        List<UserEntity> assignmentStaffs = userRepository.findAllById(assignmentBuildingDTO.getStaffs());
+        for (UserEntity user : assignmentStaffs){
+            AssignmentBuildingEntity assignmentBuildingEntity = new AssignmentBuildingEntity();
+            assignmentBuildingEntity.setBuilding(building);
+            assignmentBuildingEntity.setStaffs(user);
+            assignmentBuildingRepository.save(assignmentBuildingEntity);
+        }
     }
 
 

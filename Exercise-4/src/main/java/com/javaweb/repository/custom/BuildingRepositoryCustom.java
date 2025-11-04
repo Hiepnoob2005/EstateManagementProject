@@ -2,11 +2,13 @@ package com.javaweb.repository.custom;
 
 import com.javaweb.builder.BuildingSearchBuilder;
 import com.javaweb.entity.BuildingEntity;
+import com.javaweb.model.request.BuildingSearchRequest;
 
 import java.util.List;
 
 public interface BuildingRepositoryCustom {
-    void deleteAssignmentByBuildingId(BuildingEntity buildingEntity);
-    void deleteRentAreaByBuildingId(BuildingEntity buildingEntity);
-    List<BuildingEntity> findAll(BuildingSearchBuilder buildingSearchBuilder);
+    void deleteAssignmentByBuildingId(Long id);
+    void deleteRentAreaByBuildingId(Long id);
+    List<BuildingEntity> findAll(BuildingSearchRequest buildingSearchRequest);
+    int countTotalItem();
 }

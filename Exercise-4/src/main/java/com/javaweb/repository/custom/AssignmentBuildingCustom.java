@@ -2,6 +2,6 @@ package com.javaweb.repository.custom;
 
 import com.javaweb.entity.BuildingEntity;
 
-public interface AssignmentBuildingRepositoryCustom {
+public interface AssignmentBuildingCustom {
     void deleteAssignmentBuildingEntityByBuilding(BuildingEntity buildingEntity);
 }

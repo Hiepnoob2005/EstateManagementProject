@@ -2,6 +2,7 @@ package com.javaweb.repository.custom.impl;
 
 import com.javaweb.builder.BuildingSearchBuilder;
 import com.javaweb.entity.BuildingEntity;
+import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.repository.custom.BuildingRepositoryCustom;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -27,21 +28,21 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     private String USER;
     @Value("${spring.datasource.password}")
     private String PASS;
-    public static void joinTable(BuildingSearchBuilder buildingSearchBuilder, StringBuilder sql){
-        Long staffId = buildingSearchBuilder.getStaffId();
+    public static void joinTable(BuildingSearchRequest buildingSearchRequest, StringBuilder sql){
+        Long staffId = buildingSearchRequest.getStaffId();
         if (staffId != null){
             sql.append("JOIN assignmentbuilding a ON b.id = a.buildingid");
         }
     }
-    public static void queryNormal(BuildingSearchBuilder buildingSearchBuilder, StringBuilder where){
+    public static void queryNormal(BuildingSearchRequest buildingSearchRequest, StringBuilder where){
         try {
-            Field[] fields = BuildingSearchBuilder.class.getDeclaredFields();
+            Field[] fields = BuildingSearchRequest.class.getDeclaredFields();
             for (Field item : fields){
                 item.setAccessible(true);
                 String fieldName = item.getName();
                 if (!fieldName.equals("staffId") && !fieldName.startsWith("area") && !fieldName.startsWith("rentPrice") &&!fieldName.equals("typeCode")){
-                    Object value = item.get(buildingSearchBuilder);
-                    if (value != null){
+                    Object value = item.get(buildingSearchRequest);
+                    if (value != null && value != ""){
                         if (item.getType().getName().equals("java.lang.Long") || item.getType().getName().equals("java.lang.Integer")){
                             where.append(" AND b." + fieldName + " = " + value + " ");
                         }
@@ -57,13 +58,13 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         }
     }
 
-    public static void querySpecial (BuildingSearchBuilder buildingSearchBuilder, StringBuilder where){
-        Long staffId = buildingSearchBuilder.getStaffId();
+    public static void querySpecial (BuildingSearchRequest buildingSearchRequest, StringBuilder where){
+        Long staffId = buildingSearchRequest.getStaffId();
         if (staffId != null){
             where.append(" AND a.staffid = " + staffId);
         }
-        Long rentAreaTo = buildingSearchBuilder.getAreaTo();
-        Long rentAreaFrom = buildingSearchBuilder.getAreaFrom();
+        Long rentAreaTo = buildingSearchRequest.getAreaTo();
+        Long rentAreaFrom = buildingSearchRequest.getAreaFrom();
         if (rentAreaFrom != null || rentAreaTo != null){
             where.append(" AND EXISTS (SELECT * FROM rentarea r WHERE r.buildingid = b.id ");
             if (rentAreaFrom != null){
@@ -74,8 +75,8 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
             }
             where.append(") ");
         }
-        Long rentPriceFrom = buildingSearchBuilder.getRentPriceFrom();
-        Long rentPriceTo = buildingSearchBuilder.getRentPriceTo();
+        Long rentPriceFrom = buildingSearchRequest.getRentPriceFrom();
+        Long rentPriceTo = buildingSearchRequest.getRentPriceTo();
 
         if (rentPriceFrom != null ){
                 where.append(" AND b.rentprice >= " + rentPriceFrom + " ");
@@ -84,40 +85,48 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                 where.append(" AND b.rentprice <= " + rentPriceTo + " ");
 
         }
-        List<String> typeCode = buildingSearchBuilder.getTypeCode();
+        List<String> typeCode = buildingSearchRequest.getTypeCode();
         if (typeCode != null && typeCode.size() != 0){
             where.append("AND( ");
-            String sql = typeCode.stream().map(it -> "renttype.code LIKE" + "'%" + it + "%' ").collect(Collectors.joining(" OR "));
+            String sql = typeCode.stream().map(it -> "b.type LIKE" + "'%" + it + "%' ").collect(Collectors.joining(" OR "));
             where.append(sql);
             where.append(" ) ");
         }
     }
     @Transactional
     @Override
-    public void deleteAssignmentByBuildingId(BuildingEntity buildingEntity) {
-        String sql = "DELETE assignmentbuilding a where a.buildingid = " + buildingEntity.getId();
+    public void deleteAssignmentByBuildingId(Long id) {
+        String sql = "DELETE assignmentbuilding a where a.buildingid = " + id;
         Query query = entityManager.createNativeQuery(sql);
         query.executeUpdate();
     }
     @Transactional
     @Override
-    public void deleteRentAreaByBuildingId(BuildingEntity buildingEntity) {
-        String sql = "DELETE rentarea r WHERE r.building = " + buildingEntity.getId();
+    public void deleteRentAreaByBuildingId(Long id) {
+        String sql = "DELETE rentarea r WHERE r.building = " + id;
         Query query = entityManager.createNativeQuery(sql);
         query.executeUpdate();
     }
 
     @Override
-    public List<BuildingEntity> findAll(BuildingSearchBuilder buildingSearchBuilder) {
+    public List<BuildingEntity> findAll(BuildingSearchRequest buildingSearchRequest) {
         StringBuilder sql = new StringBuilder("SELECT b.* from building b ");
-        StringBuilder where = new StringBuilder("WHERE 1 = 1 ");
-        joinTable(buildingSearchBuilder, sql);
-        queryNormal(buildingSearchBuilder, where);
-        querySpecial(buildingSearchBuilder, where);
+        joinTable(buildingSearchRequest, sql);
+        StringBuilder where = new StringBuilder(" WHERE 1 = 1 ");
+        queryNormal(buildingSearchRequest, where);
+        querySpecial(buildingSearchRequest, where);
         where.append(" GROUP BY b.id ");
         sql.append(where.toString());
         List<BuildingEntity> result = new ArrayList<>();
         Query query = entityManager.createNativeQuery(sql.toString(), BuildingEntity.class);
         return query.getResultList();
     }
+
+    @Override
+    public int countTotalItem() {
+        String sql = "SELECT * from building b WHERE 1 = 1 ";
+        Query query = entityManager.createNativeQuery(sql);
+        return query.getResultList().size();
+    }
+
 }

@@ -90,8 +90,8 @@ public class BuildingEntity {
 //    @Column(name = "map")
 //    private String map;
 
-    @Column(name = "image")
-    private String image;
+//    @Column(name = "image")
+//    private String image;
 
     @Column(name = "createddate")
     private Date createddate;
@@ -131,13 +131,13 @@ public class BuildingEntity {
         this.items = items;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
+//    public String getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(String image) {
+//        this.image = image;
+//    }
 
     public Long getId() {
         return id;
@@ -347,9 +347,7 @@ public class BuildingEntity {
         this.managerphone = managerphonenumber;
     }
 
-//    public List<UserEntity> getUserEntities() {
-//        return userEntities;
-//    }
+
 //
 //    public void setUserEntities(List<UserEntity> userEntities) {
 //        this.userEntities = userEntities;
@@ -358,9 +356,7 @@ public class BuildingEntity {
 //        return userEntities;
 //    }
 //
-//    public void setUserEntities(List<UserEntity> userEntities) {
-//        this.userEntities = userEntities;
-//    }
+
 
     public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
         return assignmentBuildingEntities;

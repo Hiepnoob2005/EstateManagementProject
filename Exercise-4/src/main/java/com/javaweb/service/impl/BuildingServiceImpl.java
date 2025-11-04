@@ -1,22 +1,30 @@
 package com.javaweb.service.impl;
 
+import com.javaweb.builder.BuildingSearchBuilder;
+import com.javaweb.config.ModelMapperConfig;
+import com.javaweb.converter.BuildingDTOConverter;
 import com.javaweb.entity.BuildingEntity;
+import com.javaweb.entity.RentAreaEntity;
 import com.javaweb.entity.UserEntity;
+import com.javaweb.model.dto.BuildingDTO;
+import com.javaweb.model.request.BuildingSearchRequest;
+import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.StaffResponseDTO;
 import com.javaweb.repository.AssignmentBuildingRepository;
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.repository.UserRepository;
-import com.javaweb.service.BuildingService;
+import com.javaweb.service.IBuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class BuildingServiceImpl implements BuildingService {
+public class BuildingServiceImpl implements IBuildingService {
     @Autowired
     public BuildingRepository buildingRepository;
     @Autowired
@@ -25,6 +33,10 @@ public class BuildingServiceImpl implements BuildingService {
     public RentAreaRepository rentAreaRepository;
     @Autowired
     public AssignmentBuildingRepository assignmentBuildingRepository;
+    @Autowired
+    public BuildingDTOConverter buildingDTOConverter;
+    @Autowired
+    public ModelMapperConfig modelMapper;
     @Override
     public ResponseDTO listStaffs(Long buildingId) {
         BuildingEntity building = buildingRepository.findById(buildingId).get();
@@ -48,5 +60,58 @@ public class BuildingServiceImpl implements BuildingService {
         responseDTO.setData(staffResponseDTOS);
         responseDTO.setMessage("success");
         return responseDTO;
+    }
+
+    @Override
+    public List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest) {
+        List<BuildingEntity> buildingEntities = buildingRepository.findAll(buildingSearchRequest);
+        List<BuildingSearchResponse> result = new ArrayList<BuildingSearchResponse>();
+        for (BuildingEntity building : buildingEntities){
+            BuildingSearchResponse b = buildingDTOConverter.toBuildingSearchResponse(building);
+            result.add(b);
+        }
+        return result;
+    }
+
+    @Override
+    public void deleteBuildings(List<Long> ids) {
+        for (Long id : ids){
+            buildingRepository.deleteAssignmentByBuildingId(id);
+            buildingRepository.deleteRentAreaByBuildingId(id);
+            buildingRepository.deleteById(id);
+        }
+    }
+
+    @Override
+    public BuildingDTO findBuildingById(Long id) {
+        BuildingEntity buildingEntity = buildingRepository.findById(id).get();
+        BuildingDTO buildingDTO = buildingDTOConverter.toBuidlingDTO_forUpdateBuilding(buildingEntity);
+        return buildingDTO;
+    }
+    @Transactional
+    @Override
+    public void addOrUpdateBuildings(BuildingDTO buildingDTO) {
+        BuildingEntity updateOrAddBuilding = buildingDTOConverter.toBuildingEntity(buildingDTO);
+        BuildingEntity existingBuilding;
+        if (buildingDTO.getId() != null){
+            existingBuilding = buildingRepository.findById(buildingDTO.getId()).get();
+        }
+        else {
+            existingBuilding = new BuildingEntity();
+        }
+        existingBuilding =  buildingDTOConverter.entityToEntity(existingBuilding, updateOrAddBuilding);
+        buildingRepository.save(existingBuilding);
+        rentAreaRepository.deleteBuildingById(existingBuilding.getId());
+        for (RentAreaEntity rentAreaEntity : updateOrAddBuilding.getItems()){
+            if (rentAreaEntity.getValue() != ""){
+                rentAreaEntity.setBuilding(updateOrAddBuilding);
+                rentAreaRepository.save(rentAreaEntity);
+            }
+        }
+    }
+
+    @Override
+    public int countTotalItem() {
+        return 0;
     }
 }

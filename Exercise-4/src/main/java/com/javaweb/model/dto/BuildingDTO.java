@@ -15,7 +15,7 @@ public class BuildingDTO extends AbstractDTO{
     private Long level;
     private String rentArea;
     private Long rentPrice;
-    private String rentPriceDescription;
+    private String rentpricedescription;
     private Long serviceFee;
     private String structure;
     private Long carFee;
@@ -24,6 +24,15 @@ public class BuildingDTO extends AbstractDTO{
     private Long electricityFee;
     private Long deposit;
     private Long payment;
+
+    public String getRentpricedescription() {
+        return rentpricedescription;
+    }
+
+    public void setRentpricedescription(String rentpricedescription) {
+        this.rentpricedescription = rentpricedescription;
+    }
+
     private Long rentTime;
     private Long decorationTime;
     private Long brokerageFee;
@@ -166,13 +175,7 @@ public class BuildingDTO extends AbstractDTO{
         this.typeCode = typeCode;
     }
 
-    public String getRentPriceDescription() {
-        return rentPriceDescription;
-    }
 
-    public void setRentPriceDescription(String rentPriceDescription) {
-        this.rentPriceDescription = rentPriceDescription;
-    }
 
     public Long getServiceFee() {
         return serviceFee;
