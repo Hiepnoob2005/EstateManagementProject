@@ -17,6 +17,7 @@ import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.service.IBuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.info.ProjectInfoProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,13 +65,13 @@ public class BuildingServiceImpl implements IBuildingService {
 
     @Override
     public List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest) {
-        List<BuildingEntity> buildingEntities = buildingRepository.findAll(buildingSearchRequest);
-        List<BuildingSearchResponse> result = new ArrayList<BuildingSearchResponse>();
-        for (BuildingEntity building : buildingEntities){
-            BuildingSearchResponse b = buildingDTOConverter.toBuildingSearchResponse(building);
-            result.add(b);
+        List<BuildingEntity> building = buildingRepository.findAll(buildingSearchRequest);
+        List<BuildingSearchResponse> buildingSearchResponses = new ArrayList<>();
+        for (BuildingEntity buildingEntity : building){
+            BuildingSearchResponse buildingSearchResponse = buildingDTOConverter.toBuildingSearchResponse(buildingEntity);
+            buildingSearchResponses.add(buildingSearchResponse);
         }
-        return result;
+        return buildingSearchResponses;
     }
 
     @Override
@@ -84,8 +85,8 @@ public class BuildingServiceImpl implements IBuildingService {
 
     @Override
     public BuildingDTO findBuildingById(Long id) {
-        BuildingEntity buildingEntity = buildingRepository.findById(id).get();
-        BuildingDTO buildingDTO = buildingDTOConverter.toBuidlingDTO_forUpdateBuilding(buildingEntity);
+        BuildingEntity building = buildingRepository.findById(id).get();
+        BuildingDTO buildingDTO = buildingDTOConverter.toBuildingDTO_forUpdateBuilding(building);
         return buildingDTO;
     }
     @Transactional
@@ -99,7 +100,7 @@ public class BuildingServiceImpl implements IBuildingService {
         else {
             existingBuilding = new BuildingEntity();
         }
-        existingBuilding =  buildingDTOConverter.entityToEntity(existingBuilding, updateOrAddBuilding);
+        existingBuilding = buildingDTOConverter.entityToEntity(existingBuilding, updateOrAddBuilding);
         buildingRepository.save(existingBuilding);
         rentAreaRepository.deleteBuildingById(existingBuilding.getId());
         for (RentAreaEntity rentAreaEntity : updateOrAddBuilding.getItems()){

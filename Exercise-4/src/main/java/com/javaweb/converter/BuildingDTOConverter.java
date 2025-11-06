@@ -18,51 +18,50 @@ import java.util.stream.Collectors;
 public class BuildingDTOConverter {
     @Autowired
     private ModelMapper modelMapper;
-    public BuildingSearchResponse toBuildingSearchResponse (BuildingEntity item){
-        BuildingSearchResponse building =modelMapper.map(item, BuildingSearchResponse.class);
+    public BuildingSearchResponse toBuildingSearchResponse (BuildingEntity item) {
+        BuildingSearchResponse building = modelMapper.map(item,BuildingSearchResponse.class);
         building.setName(item.getName());
-        if (item.getDistrict() != null){
-            String districtKey = item.getDistrict();
-            String districtValue = DistrictCode.type().get(districtKey);
-            building.setAddress(item.getStreet() + "," + item.getWard() + "," +districtValue);
+        if (item.getDistrict() != null && item.getDistrict() != ""){
+            String districtkey = item.getDistrict();
+            String districtvalue = DistrictCode.type().get(districtkey);
+            building.setAddress(item.getStreet() + " " + item.getWard() + " " + districtvalue);
         }
         else {
-            building.setAddress(item.getStreet() + "," + item.getWard());
+            building.setAddress(item.getStreet() + " " + item.getWard());
         }
-        List<RentAreaEntity> rentAreas = item.getItems();
-        String areaResult = rentAreas.stream().map(it -> it.getValue().toString()).collect(Collectors.joining(","));
-        building.setRentArea(areaResult);
+        String result = item.getItems().stream().map(it -> it.getValue().toString()).collect(Collectors.joining(","));
+        building.setRentArea(result);
         return building;
     }
     public BuildingEntity toBuildingEntity (BuildingDTO item){
-        BuildingEntity building = modelMapper.map(item, BuildingEntity.class);
-        String typeCodeStringJoin = item.getTypeCode().stream().collect(Collectors.joining(","));
-        building.setType(typeCodeStringJoin);
+        BuildingEntity buildingEntity = modelMapper.map(item, BuildingEntity.class);
+        String typeCodeJoin =  item.getTypeCode().stream().collect(Collectors.joining(","));
+        buildingEntity.setType(typeCodeJoin);
         String[] rentAreas = item.getRentArea().split(",");
         List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
-        for (String area : rentAreas){
+        for (String rentArea : rentAreas){
             RentAreaEntity rentAreaEntity = new RentAreaEntity();
-            rentAreaEntity.setValue(area);
+            rentAreaEntity.setValue(rentArea);
             rentAreaEntities.add(rentAreaEntity);
         }
-        building.setItems(rentAreaEntities);
-        return building;
+        buildingEntity.setItems(rentAreaEntities);
+        return buildingEntity;
     }
-    public BuildingEntity entityToEntity (BuildingEntity oldBuilding, BuildingEntity newBuilding){
-        oldBuilding = modelMapper.map(newBuilding, BuildingEntity.class);
+    public BuildingEntity entityToEntity (BuildingEntity oldBuilding, BuildingEntity newBuildingEntity){
+        oldBuilding = modelMapper.map(newBuildingEntity, BuildingEntity.class);
         return oldBuilding;
     }
-    public BuildingDTO toBuidlingDTO_forUpdateBuilding(BuildingEntity item){
-        BuildingDTO building = modelMapper.map(item, BuildingDTO.class);
-        List<RentAreaEntity> rentAreas = item.getItems();
-        String resultArea = rentAreas.stream().map(it -> it.getValue().toString()).collect(Collectors.joining(","));
-        building.setRentArea(resultArea);
-        String[] typeCodes = item.getType().split(",");
-        List<String> typeCode = new ArrayList<>();
-        for (String type : typeCodes){
-            typeCode.add(type);
+    public BuildingDTO toBuildingDTO_forUpdateBuilding (BuildingEntity buildingEntity){
+        BuildingDTO building = modelMapper.map(buildingEntity, BuildingDTO.class);
+        List<RentAreaEntity> item = buildingEntity.getItems();
+        String rentAreas = item.stream().map(it -> it.getValue().toString()).collect(Collectors.joining(","));
+        building.setRentArea(rentAreas);
+        String[] typeCode = buildingEntity.getType().split(",");
+        List<String> typeCodes = new ArrayList<>();
+        for (String type : typeCode){
+            typeCodes.add(type);
         }
-        building.setTypeCode(typeCode);
+        building.setTypeCode(typeCodes);
         return building;
     }
 }

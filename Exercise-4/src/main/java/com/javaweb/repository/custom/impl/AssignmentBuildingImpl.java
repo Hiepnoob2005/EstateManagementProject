@@ -17,7 +17,7 @@ public class AssignmentBuildingImpl implements AssignmentBuildingCustom {
     @Transactional
     @Override
     public void deleteAssignmentBuildingEntityByBuilding(BuildingEntity buildingEntity) {
-        String sql = "DELETE assignmentbuilding from assignmentbuiling a where a.buildingid = " + buildingEntity.getId();
+        String sql = "DELETE assignmentbuilding a WHERE a.buildingid = " + buildingEntity.getId();
         Query query = entityManager.createNativeQuery(sql);
         query.executeUpdate();
     }

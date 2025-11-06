@@ -32,9 +32,11 @@ public class BuildingController {
         mav.addObject("modelSearch",buildingSearchRequest);
         //xuong db lấy data ok r
         List<BuildingSearchResponse> responseList = iBuildingService.findAll(buildingSearchRequest);
-        buildingSearchRequest.setListResult(responseList);
+        BuildingSearchResponse buildingSearchResponse = new BuildingSearchResponse();
+        buildingSearchResponse.setListResult(responseList);
+//        buildingSearchRequest.setListResult(responseList);
         buildingSearchRequest.setTotalItems(iBuildingService.countTotalItem());
-        mav.addObject("buildingList", buildingSearchRequest);
+        mav.addObject("buildingList", buildingSearchResponse);
         mav.addObject("listStaffs",iUserService.getStaffs());
         mav.addObject("districts",districtCode.type());
         mav.addObject("typeCodes",buildingType.type());
