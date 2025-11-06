@@ -9,6 +9,7 @@ import java.util.List;
 public interface BuildingRepositoryCustom {
     void deleteAssignmentByBuildingId(Long id);
     void deleteRentAreaByBuildingId(Long id);
+//    void deleteRentAreaByBuildingId_IdIn(List<Long> ids);
     List<BuildingEntity> findAll(BuildingSearchRequest buildingSearchRequest);
     int countTotalItem();
 }

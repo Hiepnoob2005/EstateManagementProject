@@ -19,6 +19,7 @@ import com.javaweb.service.IBuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +80,7 @@ public class BuildingServiceImpl implements IBuildingService {
             buildingRepository.deleteAssignmentByBuildingId(id);
             buildingRepository.deleteRentAreaByBuildingId(id);
             buildingRepository.deleteById(id);
+//            @Validated;
         }
     }
 
