@@ -120,7 +120,8 @@ public class BuildingEntity {
 
     //join vs rentarea
 
-    @OneToMany(mappedBy = "building",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "building",fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+                                                                    orphanRemoval = true)
     private List<RentAreaEntity> items = new ArrayList<>();
 
     public List<RentAreaEntity> getItems() {

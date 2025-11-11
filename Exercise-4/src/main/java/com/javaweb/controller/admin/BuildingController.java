@@ -8,6 +8,7 @@ import com.javaweb.enums.districtCode;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.IBuildingService;
 import com.javaweb.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +37,18 @@ public class BuildingController {
         buildingSearchResponse.setListResult(responseList);
 //        buildingSearchRequest.setListResult(responseList);
         buildingSearchRequest.setTotalItems(iBuildingService.countTotalItem());
-        mav.addObject("buildingList", buildingSearchResponse);
         mav.addObject("listStaffs",iUserService.getStaffs());
         mav.addObject("districts",districtCode.type());
         mav.addObject("typeCodes",buildingType.type());
-
+        if (SecurityUtils.getAuthorities().contains("ROLE_STAFF")){
+            Long staffId = SecurityUtils.getPrincipal().getId();
+            buildingSearchRequest.setStaffId(staffId);
+            mav.addObject("buildings",iBuildingService.findAll(buildingSearchRequest)); //tìm theo staff vì đây chỉ là staff k p manager
+        }
+        else {
+            mav.addObject("buildings",iBuildingService.findAll(buildingSearchRequest));
+            //manager
+        }
         return mav;
     }
     @GetMapping(value = "/admin/building-edit")

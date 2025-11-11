@@ -81,6 +81,7 @@ public class BuildingServiceImpl implements IBuildingService {
             buildingRepository.deleteRentAreaByBuildingId(id);
             buildingRepository.deleteById(id);
         }
+//        buildingRepository.deleteByIdIn(ids);
     }
 
     @Override

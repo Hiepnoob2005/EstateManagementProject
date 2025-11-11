@@ -278,7 +278,7 @@
 					dataType: "JSON",
                     success: function (respond) {
                         console.log("success");
-                        alert("sửa thành công")
+                        alert("thêm/sửa thành công")
                         window.location.href= '<c:url value="/admin/building-list?message=success"/> ';
                     },
 					error: function(respond){

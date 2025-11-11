@@ -18,7 +18,8 @@ import java.util.List;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
-
+    //tập trung lấy role tìm kiếm user thông qua username
+    //thứ 1 kiểm tra tài khoản có tồn tại hay ko
     @Autowired
     private IUserService userService;
 
@@ -31,8 +32,10 @@ public class CustomUserDetailService implements UserDetailsService {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for(RoleDTO role: userDTO.getRoles()){
             authorities.add(new SimpleGrantedAuthority("ROLE_"+role.getCode()));
+            //lấy role
         }
         MyUserDetail myUserDetail = new MyUserDetail(name,userDTO.getPassword(),true,true,true,true,authorities);
+        //laays thông tin
         BeanUtils.copyProperties(userDTO, myUserDetail);
         return myUserDetail;
     }

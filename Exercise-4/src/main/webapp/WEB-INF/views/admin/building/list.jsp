@@ -149,13 +149,16 @@
  														<form:input class = "form-control" path = "managerphone"/>
  													</div>
  													<div class="col-sm-2">
-
+                                                        <security:authorize access = "hasRole('MANAGER')">
+                                                            <div>
+                                                                <form:select class="form-control" path = "staffId" >
+  															    <form:option value="">----Chọn Nhân viên----</form:option>
+  															    <form:options items = "${listStaffs}"/>
+  														        </form:select>
+                                                            </div>
+                                                        </security:authorize>
                                                         <label class="name">Chọn nhân viên phụ trách</label>
-  														<form:select class="form-control" path = "staffId" >
-  															<form:option value="">----Chọn Nhân viên----</form:option>
-  															<form:options items = "${listStaffs}"/>
 
-  														</form:select>
  													</div>
  												</div>
  											</div>
@@ -250,9 +253,11 @@
                                     <a class="btn btn-xs btn-info" title="Sửa tòa nhà" href="/admin/building-edit-${tableList.id}" >
                                         <i class="ace-icon fa fa-pencil bigger-120"></i>
                                     </a>
-                                    <button class="btn btn-xs btn-danger" title="Xóa tòa nhà" onclick="deleteBuilding(${tableList.id})">
-                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                    </button>
+                                    <security:authorize access = "hasRole('MANAGER')">
+                                        <button class="btn btn-xs btn-danger" title="Xóa tòa nhà" onclick="deleteBuilding(${tableList.id})">
+                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                        </button>
+                                    </security:authorize>
                                     </display:column>
                                  </display:table>
                             </div>
