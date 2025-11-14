@@ -90,8 +90,8 @@ public class BuildingEntity {
 //    @Column(name = "map")
 //    private String map;
 
-//    @Column(name = "image")
-//    private String image;
+    @Column(name = "image")
+    private String image;
 
     @Column(name = "createddate")
     private Date createddate;
@@ -415,13 +415,13 @@ public class BuildingEntity {
         this.managerphone = managerphone;
     }
 
-//    public String getImage() {
-//        return image;
-//    }
-//
-//    public void setImage(String image) {
-//        this.image = image;
-//    }
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
 
 //

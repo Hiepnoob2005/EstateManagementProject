@@ -17,6 +17,7 @@ import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.service.IBuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -64,8 +65,8 @@ public class BuildingServiceImpl implements IBuildingService {
     }
 
     @Override
-    public List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest) {
-        List<BuildingEntity> buildingEntities = buildingRepository.findAll(buildingSearchRequest);
+    public List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest, Pageable pageable) {
+        List<BuildingEntity> buildingEntities = buildingRepository.findAll(buildingSearchRequest, pageable);
         List<BuildingSearchResponse> result = new ArrayList<BuildingSearchResponse>();
         for (BuildingEntity building : buildingEntities){
             BuildingSearchResponse b = buildingDTOConverter.toBuildingSearchResponse(building);
@@ -114,6 +115,6 @@ public class BuildingServiceImpl implements IBuildingService {
 
     @Override
     public int countTotalItem() {
-        return 0;
+        return buildingRepository.countTotalItem();
     }
 }

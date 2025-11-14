@@ -10,7 +10,9 @@ import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.service.IBuildingService;
 import com.javaweb.service.IUserService;
+import com.javaweb.utils.DisplayTagUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,8 +32,9 @@ public class BuildingController {
     public ModelAndView buildingList(@ModelAttribute (SystemConstant.MODEL) BuildingSearchRequest buildingSearchRequest, HttpServletRequest request){
         ModelAndView mav = new ModelAndView("admin/building/list");
         mav.addObject("modelSearch",buildingSearchRequest);
+        DisplayTagUtils.of(request,  buildingSearchRequest);
         //xuong db lấy data ok r
-        List<BuildingSearchResponse> responseList = iBuildingService.findAll(buildingSearchRequest);
+        List<BuildingSearchResponse> responseList = iBuildingService.findAll(buildingSearchRequest, PageRequest.of(buildingSearchRequest.getPage()-1, buildingSearchRequest.getMaxPageItems()));
         buildingSearchRequest.setListResult(responseList);
         buildingSearchRequest.setTotalItems(iBuildingService.countTotalItem());
         mav.addObject("buildingList", buildingSearchRequest);

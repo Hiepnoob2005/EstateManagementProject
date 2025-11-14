@@ -103,38 +103,36 @@ public class BuildingDTO extends AbstractDTO{
     public void setLevel(Long level) {
         this.level = level;
     }
+    private String image;
+    private String imageBase64;
+    private String imageName;
 
-//    public Long getAreaFrom() {
-//        return areaFrom;
-//    }
-//
-//    public void setAreaFrom(Long areaFrom) {
-//        this.areaFrom = areaFrom;
-//    }
-//
-//    public Long getAreaTo() {
-//        return areaTo;
-//    }
-//
-//    public void setAreaTo(Long areaTo) {
-//        this.areaTo = areaTo;
-//    }
-//
-//    public Long getRentPriceFrom() {
-//        return rentPriceFrom;
-//    }
-//
-//    public void setRentPriceFrom(Long rentPriceFrom) {
-//        this.rentPriceFrom = rentPriceFrom;
-//    }
+    public String getImage() {
+        return image;
+    }
 
-//    public Long getRentPriceTo() {
-//        return rentPriceTo;
-//    }
-//
-//    public void setRentPriceTo(Long rentPriceTo) {
-//        this.rentPriceTo = rentPriceTo;
-//    }
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getImageBase64() {
+        if (imageBase64 != null){
+            return imageBase64.split(",")[1];
+        }
+        return null;
+    }
+
+    public void setImageBase64(String imageBase64) {
+        this.imageBase64 = imageBase64;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
 
     public String getManagerName() {
         return managerName;

@@ -6,6 +6,7 @@ import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.repository.custom.BuildingRepositoryCustom;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -109,15 +110,20 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     }
 
     @Override
-    public List<BuildingEntity> findAll(BuildingSearchRequest buildingSearchRequest) {
+    public List<BuildingEntity> findAll(BuildingSearchRequest buildingSearchRequest, Pageable pageable) {
         StringBuilder sql = new StringBuilder("SELECT b.* from building b ");
         joinTable(buildingSearchRequest, sql);
         StringBuilder where = new StringBuilder(" WHERE 1 = 1 ");
         queryNormal(buildingSearchRequest, where);
         querySpecial(buildingSearchRequest, where);
         where.append(" GROUP BY b.id ");
-        sql.append(where.toString());
-        List<BuildingEntity> result = new ArrayList<>();
+        if (pageable != null){
+            int t = pageable.getPageSize();
+            Long m = pageable.getOffset();
+            sql.append(where).append(" LIMIT " + t). append(" OFFSET " + m);
+        }
+        sql.append(" ; ");
+//        List<BuildingEntity> result = new ArrayList<>();
         Query query = entityManager.createNativeQuery(sql.toString(), BuildingEntity.class);
         return query.getResultList();
     }
