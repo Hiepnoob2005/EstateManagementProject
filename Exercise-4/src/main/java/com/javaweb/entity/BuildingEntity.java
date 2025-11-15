@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name="building")
-public class BuildingEntity {
+public class BuildingEntity extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -93,17 +93,6 @@ public class BuildingEntity {
     @Column(name = "image")
     private String image;
 
-    @Column(name = "createddate")
-    private Date createddate;
-
-    @Column(name = "modifieddate")
-    private Date modifieddate;
-
-    @Column(name = "createdby")
-    private String createdby;
-
-    @Column(name = "modifiedby")
-    private String modifiedby;
 
     @Column(name = "managername")
     private String managername;
@@ -343,13 +332,7 @@ public class BuildingEntity {
         this.note = note;
     }
 
-    public Date getCreateddate() {
-        return createddate;
-    }
 
-    public void setCreateddate(Date createddate) {
-        this.createddate = createddate;
-    }
 
     public String getManagername() {
         return managername;
@@ -403,29 +386,7 @@ public class BuildingEntity {
     }
 
 
-    public Date getModifieddate() {
-        return modifieddate;
-    }
 
-    public void setModifieddate(Date modifieddate) {
-        this.modifieddate = modifieddate;
-    }
-
-    public String getCreatedby() {
-        return createdby;
-    }
-
-    public void setCreatedby(String createdby) {
-        this.createdby = createdby;
-    }
-
-    public String getModifiedby() {
-        return modifiedby;
-    }
-
-    public void setModifiedby(String modifiedby) {
-        this.modifiedby = modifiedby;
-    }
 
     public String getManagerphone() {
         return managerphone;

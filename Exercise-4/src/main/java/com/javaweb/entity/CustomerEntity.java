@@ -1,10 +1,12 @@
 package com.javaweb.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "customer")
-public class CustomerEntity {
+public class CustomerEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,6 +31,33 @@ public class CustomerEntity {
 
     @Column(name = "is_active")
     private String isActive;
+
+    @ManyToMany
+    @JoinTable(name = "assignmentcustomer",
+        joinColumns = @JoinColumn(name = "customerid"),
+            inverseJoinColumns = @JoinColumn(name = "staffid")
+    )
+    private List<UserEntity> userEntities = new ArrayList<>();
+
+    public List<UserEntity> getUserEntities() {
+        return userEntities;
+    }
+
+    public void setUserEntities(List<UserEntity> userEntities) {
+        this.userEntities = userEntities;
+    }
+
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE},
+                                                                orphanRemoval = true)
+    private List<TransactionTypeEntity> transactionTypeEntities = new ArrayList<>();
+
+    public List<TransactionTypeEntity> getTransactionTypeEntities() {
+        return transactionTypeEntities;
+    }
+
+    public void setTransactionTypeEntities(List<TransactionTypeEntity> transactionTypeEntities) {
+        this.transactionTypeEntities = transactionTypeEntities;
+    }
 
     public Long getId() {
         return id;
