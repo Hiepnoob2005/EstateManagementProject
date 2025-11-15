@@ -90,8 +90,8 @@ public class BuildingEntity {
 //    @Column(name = "map")
 //    private String map;
 
-//    @Column(name = "image")
-//    private String image;
+    @Column(name = "image")
+    private String image;
 
     @Column(name = "createddate")
     private Date createddate;
@@ -114,10 +114,13 @@ public class BuildingEntity {
 
 
 
-    //join vs assignmentbuilding
-   @OneToMany(mappedBy = "building",fetch = FetchType.LAZY)
-   private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
-
+    //join vs user qua assignmentbuilding
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "assignmentbuilding",
+                joinColumns = @JoinColumn(name = "buildingid",nullable = false),
+                inverseJoinColumns = @JoinColumn(name = "staffid",nullable = false))
+//   private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
+    private List<UserEntity> userEntities = new ArrayList<>();
     //join vs rentarea
 
     @OneToMany(mappedBy = "building",fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE},
@@ -139,6 +142,22 @@ public class BuildingEntity {
 //    public void setImage(String image) {
 //        this.image = image;
 //    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public List<UserEntity> getUserEntities() {
+        return userEntities;
+    }
+
+    public void setUserEntities(List<UserEntity> userEntities) {
+        this.userEntities = userEntities;
+    }
 
     public Long getId() {
         return id;
@@ -359,13 +378,13 @@ public class BuildingEntity {
 //
 
 
-    public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
-        return assignmentBuildingEntities;
-    }
-
-    public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
-        this.assignmentBuildingEntities = assignmentBuildingEntities;
-    }
+//    public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
+//        return assignmentBuildingEntities;
+//    }
+//
+//    public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
+//        this.assignmentBuildingEntities = assignmentBuildingEntities;
+//    }
 
     public String getMotofee() {
         return motofee;

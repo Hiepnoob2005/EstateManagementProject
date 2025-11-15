@@ -6,6 +6,7 @@ import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.model.response.ResponseDTO;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +14,8 @@ import java.util.List;
 @Service
 public interface IBuildingService {
     ResponseDTO listStaffs(Long buildingId);
-    List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest);
+    List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest, Pageable pageable);
+
     void deleteBuildings (List<Long> ids);
     BuildingDTO findBuildingById (Long id);
     void addOrUpdateBuildings (BuildingDTO buildingDTO);
