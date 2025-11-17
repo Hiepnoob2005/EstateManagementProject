@@ -30,9 +30,13 @@ public class CustomerEntity extends BaseEntity{
     private String status;
 
     @Column(name = "is_active")
-    private String isActive;
+    private int isActive;
 
-    @ManyToMany
+    public void setIsActive(int isActive) {
+        this.isActive = isActive;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "assignmentcustomer",
         joinColumns = @JoinColumn(name = "customerid"),
             inverseJoinColumns = @JoinColumn(name = "staffid")
@@ -49,13 +53,13 @@ public class CustomerEntity extends BaseEntity{
 
     @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE},
                                                                 orphanRemoval = true)
-    private List<TransactionTypeEntity> transactionTypeEntities = new ArrayList<>();
+    private List<TransactionEntity> transactionTypeEntities = new ArrayList<>();
 
-    public List<TransactionTypeEntity> getTransactionTypeEntities() {
+    public List<TransactionEntity> getTransactionTypeEntities() {
         return transactionTypeEntities;
     }
 
-    public void setTransactionTypeEntities(List<TransactionTypeEntity> transactionTypeEntities) {
+    public void setTransactionTypeEntities(List<TransactionEntity> transactionTypeEntities) {
         this.transactionTypeEntities = transactionTypeEntities;
     }
 
@@ -115,11 +119,5 @@ public class CustomerEntity extends BaseEntity{
         this.status = status;
     }
 
-    public String getIsActive() {
-        return isActive;
-    }
 
-    public void setIsActive(String isActive) {
-        this.isActive = isActive;
-    }
 }

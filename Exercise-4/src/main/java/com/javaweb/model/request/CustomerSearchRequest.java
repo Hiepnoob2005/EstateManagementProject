@@ -9,6 +9,24 @@ public class CustomerSearchRequest extends AbstractDTO {
     private String customerPhone;
     private Long staffId;
 
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(Long staffId) {
+        this.staffId = staffId;
+    }
+
     public String getName() {
         return name;
     }

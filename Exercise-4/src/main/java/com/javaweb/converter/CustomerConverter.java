@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class CustomerConverter {
     @Autowired
     private ModelMapper modelMapper;
-    public CustomerSearchResponse customerSearchResponse(CustomerEntity customer) {
+    public CustomerSearchResponse toCustomerSearchResponse(CustomerEntity customer) {
         CustomerSearchResponse customerSearchResponse = modelMapper.map(customer, CustomerSearchResponse.class);
         customerSearchResponse.setName(customer.getFullName());
         if (customer.getStatus() != ""){
