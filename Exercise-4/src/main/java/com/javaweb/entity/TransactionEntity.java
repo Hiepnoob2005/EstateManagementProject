@@ -15,7 +15,24 @@ public class TransactionEntity extends BaseEntity{
     @Column(name = "note")
     private String note;
 
+    @Column(name = "staffid")
+    private String staffid;
 
+    public String getStaffid() {
+        return staffid;
+    }
+
+    public void setStaffid(String staffid) {
+        this.staffid = staffid;
+    }
+
+    public CustomerEntity getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerEntity customer) {
+        this.customer = customer;
+    }
 
     @ManyToOne
     @JoinColumn(name = "customerid")

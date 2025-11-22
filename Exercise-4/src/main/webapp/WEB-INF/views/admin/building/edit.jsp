@@ -17,9 +17,9 @@
     					<ul class="breadcrumb">
     						<li>
     							<i class="ace-icon fa fa-home home-icon"></i>
-    							<a href="#">Home</a>
+    							<a href="#">Trang chủ</a>
     						</li>
-    						<li class="active">Dashboard</li>
+    						<li class="active">Thêm khách hàng</li>
     					</ul><!-- /.breadcrumb -->
 
 
@@ -30,7 +30,7 @@
 
     					<div class="page-header">
     						<h1 style="font-family: 'Times New Roman', Times, serif;">
-    							Dashboard
+    							Thông tin khách hàng
     							<small>
     								<i class="ace-icon fa fa-angle-double-right"></i>
     								overview &amp; stats
@@ -51,44 +51,36 @@
                                 <div class="col-xs-12">
     							<form class="form-horizontal" role="form" id = "form-edit">
     								<div class="form-group">
-    									<label class="col-xs-3">Tên tòa nhà</label>
+    									<label class="col-xs-3">Tên khách hàng</label>
     									<div class="col-xs-9" >
     										<form:input class = "form-control" path = "name"/>
     									</div>
     								</div>
+
+
     								<div class="form-group">
-    									<label class="col-xs-3">Quận</label>
-    									<div class="col-xs-3">
-                                                 <form:select class="form-control" path = "district" >
- 													    <form:option value="">----Chọn Quận----</form:option>
- 													    <form:options items = "${districts}"/>
- 												</form:select>
+    									<label class="col-xs-3">Số điện thoại</label>
+    									<div class="col-xs-9" >
+    										<form:input class = "form-control" path = "phone" name = "phone" value = ""/>
     									</div>
     								</div>
 
     								<div class="form-group">
-    									<label class="col-xs-3">Phường</label>
+    									<label class="col-xs-3">Email</label>
     									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "ward" name = "ward" value = ""/>
-    									</div>
-    								</div>
-
-    								<div class="form-group">
-    									<label class="col-xs-3">Đường</label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "street" name = "street" value = ""/>
+    										<form:input class = "form-control" path = "email" name = "email" value = ""/>
     									</div>
     								</div>
     								<div class="form-group">
-    									<label class="col-xs-3">Kết cấu</label>
+    									<label class="col-xs-3">Tên công ty</label>
     									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "structure" name = "structure" value = ""/>
+    										<form:input class = "form-control" path = "companyname" name = "companyname" value = ""/>
     									</div>
     								</div>
     								<div class="form-group">
-    									<label class="col-xs-3">Số tầng hầm</label>
+    									<label class="col-xs-3">Nhu cầu</label>
     									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "numberOfBasement" name = "numberOfBasement"/>
+    										<form:input class = "form-control" path = "demand" name = "demand"/>
     									</div>
     								</div>
     								<div class="form-group">
@@ -98,138 +90,18 @@
     									</div>
     								</div>
     								<div class="form-group">
-    									<label class="col-xs-3">Hướng</label>
+    									<label class="col-xs-3">Tình trạng</label>
     									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "direction" name = "direction" value = ""/>
+    										<form:input class = "form-control" path = "status" name = "status" value = ""/>
     									</div>
     								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">Hạng</label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "level" name = "level" value =""/>
-    									</div>
-    								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">Diện tích thuê</label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "rentArea" name = "rentArea" value =""/>
-    									</div>
-    								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">Gía thuê</label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "rentPrice" name = "rentPrice" value =""/>
-    									</div>
-    								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">Mô tả giá</label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "rentpricedescription" name = "rentPriceDescription" value =""/>
-    									</div>
-    								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">Phí dịch vụ</label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "serviceFee" name = "serviceFee" value =""/>
-    									</div>
-    								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">Phí ô tô</label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "carFee" name = "carFee" value =""/>
-    									</div>
-    								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">Phí mô tô</label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "motobikeFee" name = "motobikeFee" value =""/>
-    									</div>
-    								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">Phí ngoài giờ</label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "overtimeFee" name = "overtimeFee" value =""/>
-    									</div>
-    								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">Tiền điện</label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "electricityFee" name = "electricityFee" value =""/>
-    									</div>
-    								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">Đặt cọc</label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "deposit" name = "deposit" value =""/>
-    									</div>
-    								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">Thanh toán</label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "payment" name = "payment" value =""/>
-    									</div>
-    								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">Thời hạn thuê</label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "rentTime" name = "rentTime" value =""/>
-    									</div>
-    								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">Thời gian trang trí</label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "decorationTime" name = "decorationTime" value =""/>
-    									</div>
-    								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">Tên quản lý</label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "managerName" name = "managerName" value =""/>
-    									</div>
-    								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">SĐT quản lý</label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "managerPhone" name = "managerPhone" value =""/>
-    									</div>
-    								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">Phí môi giới </label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "brokerageFee" name = "brokerageFee" value =""/>
-    									</div>
-    								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">Loại tòa nhà</label>
-    									<div class="col-xs-9" >
-    										<form:checkboxes items= "${typeCodes}" path = "typeCode"/>
-    									</div>
-    								</div>
-    								<div class="form-group">
-    									<label class="col-xs-3">Ghi chú</label>
-    									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "note" name = "note"/>
-    									</div>
-    								</div>
-                                    <div class = "form-group">
-                                        <label class = "col-sm-3 no-padding-right">Hình đại diện</label>
-                                        <input class = "col-sm-3 no-padding-right" type = "file" id="uploadImage"/>
-                                        <div class = "col-sm-9">
-                                            <c:if test="${not empty buildingEdit.image}">
-                                                <c:set var = "imagePath" value = "/repository${building.image}"/>
-                                                <img src = "${imagePath}" id = "viewImage" width = "300px" height = "300px" style = "margin-top: 50px">
-                                            </c:if>
-                                            <c:if test="${empty buildingEdit.image}">
-                                                <img src = "/admin/image/default.png" id = "viewImage" width = "300px" height = "300px">
-                                            </c:if>
-                                        </div>
-    								</div>
+
     								<div class="form-group">
     									<label class="col-xs-3"></label>
     									<div class="col-xs-9" >
     									<c:if test = "${not empty buildingEdit.id}">
                                                 <button class="btn btn-primary" type="button" id="btnAddOrUpdateBuilding">
-    												Cập nhật tòa nhà
+    												Cập nhật khách hàng
     											</button>
     											<button class="btn btn-primary" type="button" id = "btnCancel">
     												Hủy thao tác
@@ -237,7 +109,7 @@
     									</c:if>
                                         <c:if test = "${empty buildingEdit.id}">
                                                 <button class="btn btn-primary" type="button" id="btnAddOrUpdateBuilding">
-    												Thêm tòa nhà
+    												Thêm khách hàng
     											</button>
     											<button class="btn btn-primary" type="button" id = "btnCancel">
     												Hủy thao tác
@@ -257,7 +129,7 @@
     <script>
         var imageBase64 = '';
         var imageName = '';
-		$('#btnAddOrUpdateBuilding').click(function(){
+		$('#btnAddOrUpdateCustomer').click(function(){
 
 			var data = {};
 			var typeCode = [];
@@ -266,39 +138,25 @@
 				if (v.name!= 'typeCode'){
 					data["" + v.name + ""] = v.value;
 				}
-                if (v.name == 'typeCode') {
-					typeCode.push(v.value);
-				}
-				if (imageBase64 != ''){
-				    data['imageBase64'] = imageBase64;
-				    data['imageName'] = imageName;
-				}
 			})
-			data['typeCode'] = typeCode;
-			console.log("ok");
 
 
-			//call api
-            if (typeCode != ''){
-                addOrUpdateBuilding(data);
-            }
-            else {
-                window.location.href = "/admin/building-edit?typeCode=required";
-            }
+
+
 		});
 
 
-		function addOrUpdateBuilding(data) {
+		function addOrUpdateCustomer(data) {
              $.ajax({
 					type: "POST",
-                    url: "${buildingAPI}",
+                    url: "${customerAPI}",
 					data: JSON.stringify(data),
 					contentType:"application/json",
 					dataType: "JSON",
                     success: function (respond) {
                         console.log("success");
                         alert("thêm/sửa thành công")
-                        window.location.href= '<c:url value="/admin/building-list?message=success"/> ';
+                        window.location.href= '<c:url value="/admin/customer-list?message=success"/> ';
                     },
 					error: function(respond){
 						console.log("fail");
@@ -307,27 +165,10 @@
              });
 		}
 		$('#btnCancel').click(function(){
-		    window.location.href = "/admin/building-list";
+		    window.location.href = "/admin/customer-list";
 		});
-        $('#uploadImage').change(function (event){
-            var reader = new FileReader();
-            var file = $(this)[0].files[0];
-            reader.onload = function (e){
-                imageBase64 = e.target.result;
-                imageName = file.name;
-            };
-            reader.readAsDataUrl(file);
-            openImage(this,'viewImage');
-        });
-        function openImage(input, imageView){
-            if (input.files && input.files[0]){
-                var reader = new FileReader();
-                reader.onload = function(e){
-                    $('#' + imageView).attr('src',reader.result);
-                }
-                reader.readAsDataUrl(input.files[0]);
-            }
-        }
+
+
 	</script>
 </body>
 </html>

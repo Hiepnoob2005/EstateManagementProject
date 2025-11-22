@@ -43,25 +43,13 @@ public class CustomerEntity extends BaseEntity{
     )
     private List<UserEntity> userEntities = new ArrayList<>();
 
-    public List<UserEntity> getUserEntities() {
-        return userEntities;
-    }
 
-    public void setUserEntities(List<UserEntity> userEntities) {
-        this.userEntities = userEntities;
-    }
-
+    //join with transaction
     @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE},
                                                                 orphanRemoval = true)
     private List<TransactionEntity> transactionTypeEntities = new ArrayList<>();
 
-    public List<TransactionEntity> getTransactionTypeEntities() {
-        return transactionTypeEntities;
-    }
 
-    public void setTransactionTypeEntities(List<TransactionEntity> transactionTypeEntities) {
-        this.transactionTypeEntities = transactionTypeEntities;
-    }
 
     public Long getId() {
         return id;
@@ -119,5 +107,23 @@ public class CustomerEntity extends BaseEntity{
         this.status = status;
     }
 
+    public int getIsActive() {
+        return isActive;
+    }
 
+    public List<UserEntity> getUserEntities() {
+        return userEntities;
+    }
+
+    public void setUserEntities(List<UserEntity> userEntities) {
+        this.userEntities = userEntities;
+    }
+
+    public List<TransactionEntity> getTransactionTypeEntities() {
+        return transactionTypeEntities;
+    }
+
+    public void setTransactionTypeEntities(List<TransactionEntity> transactionTypeEntities) {
+        this.transactionTypeEntities = transactionTypeEntities;
+    }
 }
