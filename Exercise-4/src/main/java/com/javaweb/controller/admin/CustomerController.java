@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@Controller
+@Controller(value = "customerControllerOfAdmin")
 public class CustomerController {
 //    @PostMapping(value = "/lien-he/")
     @Autowired
@@ -59,13 +59,13 @@ public class CustomerController {
     @GetMapping(value = "/admin/customer-edit")
     public ModelAndView customerEdit (@ModelAttribute("customerEdit") CustomerDTO customerDTO, HttpServletRequest request){
         ModelAndView mav = new ModelAndView("admin/customer/edit");
-        mav.addObject("status", Status.statusType());
+        mav.addObject("statuss", Status.statusType());
         return mav;
     }
     @GetMapping(value = "/admin/customer-edit-{id}")
     public ModelAndView customerEdit (@PathVariable("id") Long id, HttpServletRequest request){
         ModelAndView mav  = new ModelAndView("admin/customer/edit");
-        mav.addObject("status",Status.statusType());
+        mav.addObject("statuss",Status.statusType());
         CustomerDTO customerDTO = customerService.findCustomerById(id);
         mav.addObject("customerEdit",customerDTO);
         mav.addObject("transactionType", TransactionType.transactionType());

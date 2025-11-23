@@ -2,18 +2,13 @@ package com.javaweb.service.impl;
 
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.converter.UserConverter;
-import com.javaweb.entity.AssignmentBuildingEntity;
-import com.javaweb.entity.BuildingEntity;
+import com.javaweb.entity.*;
 import com.javaweb.model.dto.AssignmentBuildingDTO;
+import com.javaweb.model.dto.AssignmentCustomerDTO;
 import com.javaweb.model.dto.PasswordDTO;
 import com.javaweb.model.dto.UserDTO;
-import com.javaweb.entity.RoleEntity;
-import com.javaweb.entity.UserEntity;
 import com.javaweb.exception.MyException;
-import com.javaweb.repository.AssignmentBuildingRepository;
-import com.javaweb.repository.BuildingRepository;
-import com.javaweb.repository.RoleRepository;
-import com.javaweb.repository.UserRepository;
+import com.javaweb.repository.*;
 import com.javaweb.service.IUserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +41,8 @@ public class UserService implements IUserService {
     private UserConverter userConverter;
     @Autowired
     private BuildingRepository buildingRepository;
-
+    @Autowired
+    private CustomerRepository customerRepository;
     @Autowired
     private AssignmentBuildingRepository assignmentBuildingRepository;
     @Override
@@ -113,6 +109,16 @@ public class UserService implements IUserService {
             assignmentBuildingEntity.setStaffs(user);
             assignmentBuildingRepository.save(assignmentBuildingEntity);
         }
+    }
+
+    @Override
+    @Transactional
+    public void updateAssignmentCustomer(AssignmentCustomerDTO assignmentCustomerDTO) {
+        CustomerEntity customer = customerRepository.findById(assignmentCustomerDTO.getCustomerId()).get();
+        List<UserEntity> staffAssignmentCustomer = userRepository.findAllById(assignmentCustomerDTO.getStaffs());
+        customer.setUserEntities(staffAssignmentCustomer);
+        customerRepository.save(customer);
+
     }
 
 

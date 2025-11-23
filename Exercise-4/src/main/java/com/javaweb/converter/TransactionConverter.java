@@ -4,7 +4,9 @@ import com.javaweb.entity.TransactionEntity;
 import com.javaweb.model.dto.TransactionTypeDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TransactionConverter {
     @Autowired
     private ModelMapper modelMapper;

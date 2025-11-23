@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
-<c:url var = "customListUrl" value = "/admin/custom-list"/>
-<c:url var = "customAPI" value = "/api/custom"/>
+<c:url var = "customerListUrl" value = "/admin/customer-list"/>
+<c:url var = "customerAPI" value = "/api/customer"/>
 <html>
 <head>
-<title> Danh sách khách hàng </title>
+<title> Chỉnh sửa thông tin </title>
 </head>
 <body>
 
@@ -55,7 +55,7 @@
 
 								<div class="widget-body" style="font-family: 'Times New Roman', Times, serif;">
 									<div class="widget-main">
-									    <form:form id = "listForm" modelAttribute = "modelSearch" method = "GET" action = "${buildingListUrl}">
+									    <form:form id = "listForm" modelAttribute = "modelSearch" method = "GET" action = "${customerListUrl}">
                                         <div class="row">
 
 
@@ -280,7 +280,7 @@
           		function assignment(data){
                   $.ajax({
 
-                    url: "${buildingAPI}/" + 'assignment',
+                    url: "${customerAPI}/" + 'assignment',
                     type: "POST",
                     data: JSON.stringify(data),
                     contentType:"application/json",
@@ -317,14 +317,14 @@
             function deleteCustomers(data){
                  $.ajax({
 					type: "Delete",
-                    url: "${buildingAPI}/" + data,
+                    url: "${customerAPI}/" + data,
 					data: JSON.stringify(data),
 					contentType:"application/json",
 					dataType: "JSON",
                     success: function (respond) {
                         console.log("success");
                         alert("xóa thành công")
-                        window.location.href= '<c:url value="/admin/building-list?message=success"/> ';
+                        window.location.href= '<c:url value="/admin/customer-list?message=success"/> ';
                     },
 					error: function(respond){
 						console.log("fail");
