@@ -236,8 +236,10 @@
     </footer>
 </div>
     <script>
-        $('#addCustomer').click(function () {
+        $('#addCustomer').click(function (e) {
+            e.preventDefault();
             var data = {};
+            data['status'] = 'CHUA_XU_LY';
             var formData = $('listForm').serializeArray();
             $.each(formData,function(i,v) {
                 if (v.name != 'title'){

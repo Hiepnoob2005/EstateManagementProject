@@ -49,7 +49,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                             where.append(" AND b." + fieldName + " = " + value + " ");
                         }
                         else if (item.getType().getName().equals("java.lang.String")){
-                            where.append(" AND b." + fieldName + "LIKE '%" + value + "%' ");
+                            where.append(" AND b." + fieldName + " LIKE '%" + value + "%' ");
                         }
                     }
                 }

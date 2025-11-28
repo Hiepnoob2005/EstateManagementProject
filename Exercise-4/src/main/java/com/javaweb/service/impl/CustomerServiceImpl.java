@@ -94,7 +94,7 @@ public class CustomerServiceImpl implements ICustomerService {
         CustomerEntity customerEntity;
         if (updateOrAddCustomer.getId() != null){
             customerEntity = customerRepository.findById(updateOrAddCustomer.getId()).get();
-            updateOrAddCustomer.setUserEntities(customerEntity.getUserEntities());
+            updateOrAddCustomer.setUserEntities(customerEntity.getUserEntities()); //setStaff
         }
         updateOrAddCustomer.setIsActive(1);
         customerRepository.save(updateOrAddCustomer);

@@ -34,7 +34,6 @@ public class BuildingController {
         ModelAndView mav = new ModelAndView("admin/building/list");
         mav.addObject("modelSearch",buildingSearchRequest);
         DisplayTagUtils.of(request,  buildingSearchRequest);
-        //xuong db lấy data ok r
         List<BuildingSearchResponse> responseList = iBuildingService.findAll(buildingSearchRequest, PageRequest.of(buildingSearchRequest.getPage()-1, buildingSearchRequest.getMaxPageItems()));
         buildingSearchRequest.setListResult(responseList);
         buildingSearchRequest.setTotalItems(iBuildingService.countTotalItem());
@@ -60,7 +59,6 @@ public class BuildingController {
         mav.addObject("buildingEdit",buildingDTO);
         mav.addObject("districts", districtCode.type());
         mav.addObject("typeCodes", buildingType.type());
-        //xuong db tìm building theo id
 //        mav.addObject("building", buildingDTO);
         return mav;
     }

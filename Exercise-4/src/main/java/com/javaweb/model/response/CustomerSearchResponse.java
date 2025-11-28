@@ -3,29 +3,20 @@ package com.javaweb.model.response;
 import com.javaweb.model.dto.AbstractDTO;
 
 public class CustomerSearchResponse extends AbstractDTO {
-    private Long id;
-    private String name;
+
+    private String fullName;
     private String phone;
     private String email;
     private String demand;
     private String status;
 
-    @Override
-    public Long getId() {
-        return id;
+
+    public String getFullName() {
+        return fullName;
     }
 
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getPhone() {

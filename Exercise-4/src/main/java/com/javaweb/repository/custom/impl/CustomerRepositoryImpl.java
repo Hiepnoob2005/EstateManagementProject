@@ -71,7 +71,7 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustom {
         joinTable(customerSearchRequest, sql);
         queryNormal(customerSearchRequest, where);
         querySpecial(customerSearchRequest, where);
-        sql.append(where);
+//        sql.append(where);
         where.append(" AND customer.is_active = 1 ");
         where.append(" GROUP BY customer.id ");
         if (pageable != null){
@@ -79,13 +79,16 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustom {
             Long m = pageable.getOffset();
             sql.append(where).append(" LIMIT " + t). append(" OFFSET " + m);
         }
+        else {
+            sql.append(where);
+        }
         Query query = entityManager.createNativeQuery(sql.toString(), CustomerEntity.class);
         return query.getResultList();
     }
 
     @Override
     public int countTotalItem() {
-        String sql = "SELECT * FROM customer WHERE 1 = 1 ";
+        String sql = "SELECT * FROM customer where customer.is_active=1";
         Query query = entityManager.createNativeQuery(sql);
         return query.getResultList().size();
     }

@@ -1,5 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="/common/taglib.jsp" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@include file="/common/taglib.jsp"%>
 <c:url var = "customerListUrl" value = "/admin/customer-list"/>
 <c:url var = "customerAPI" value = "/api/customer"/>
 <html>
@@ -63,10 +63,10 @@
  													<div class="col-xs-12">
  													<div class="col-xs-4">
  														<label class="name">Tên khách hàng</label>
- 														<form:input class = "form-control" path = "name"/>
+ 														<form:input name = "name" class = "form-control" path = "fullname"/>
  													</div>
  													<div class="col-xs-4">
- 														<label class="name">Di động</label>
+ 														<label class="name">Số điện thoại</label>
  														<form:input class = "form-control" path = "phone"/>
  													</div>
  													<div class="col-xs-4">
@@ -76,9 +76,9 @@
  													</div>
  												</div>
  												</div>
- 											<div class="form-group btn-group">
+ 											<div class="form-group">
  												<div class="col-xs-12">
- 													<div class="col-sm-2">
+ 													<div class="col-xs-4">
                                                         <security:authorize access = "hasRole('MANAGER')">
                                                             <div>
                                                                 <form:select class="form-control" path = "staffId" >
@@ -87,7 +87,6 @@
   														        </form:select>
                                                             </div>
                                                         </security:authorize>
-                                                        <label class="name">Chọn nhân viên phụ trách</label>
  													</div>
  												</div>
  											</div>
@@ -146,9 +145,9 @@
     				<div class = "row">
                         <div class="col-xs-12">
                             <div class = "table-responsive">
-                                 <display:table name="model.listResult" cellspacing="0" cellpadding="0"
+                                 <display:table name="customerList.listResult" cellspacing="0" cellpadding="0"
                                            requestURI="${customerListURL}" partialList="true" sort="external"
-                                           size="${model.totalItems}" defaultsort="2" defaultorder="ascending"
+                                           size="${customerList.totalItems}" defaultsort="2" defaultorder="ascending"
                                            id="tableList" pagesize="${customerList.maxPageItems}"
                                            export="false"
                                            class="table table-fcv-ace table-striped table-bordered table-hover dataTable no-footer"
@@ -161,12 +160,12 @@
                                                 id = "checkbox_${tableList.id}" class = "check-box-element"/>
                                         </fieldset>
                                     </display:column>
-                                    <display:column headerClass = "text-left" property = "name" title = "Tên khách hàng"/>
+                                    <display:column headerClass = "text-left" property = "fullName" title = "Tên khách hàng"/>
                                     <display:column headerClass = "text-left" property = "phone" title = "Di động"/>
                                     <display:column headerClass = "text-left" property = "email" title = "Email"/>
                                     <display:column headerClass = "text-left" property = "demand" title = "Nhu cầu"/>
-                                    <display:column headerClass = "text-left" property = "createdby" title = "Người thêm"/>
-                                    <display:column headerClass = "text-left" property = "createddate" title = "Ngày thêm"/>
+                                    <display:column headerClass = "text-left" property = "createdBy" title = "Người thêm"/>
+                                    <display:column headerClass = "text-left" property = "createdDate" title = "Ngày thêm"/>
                                     <display:column headerClass = "text-left" property = "status" title = "Tình trạng"/>
                                     <display:column headerClass="col-actions" title="Thao tác">
                                     <security:authorize access = "hasRole('MANAGER')">
@@ -198,7 +197,7 @@
     			<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
     		</a>
     	</div><!-- /.main-container -->
-    	<div class="modal fade" id="assignmentBuildingModal" role="dialog" style="font-family: 'Times New Roman', Times, serif;">
+    	<div class="modal fade" id="assignmentCustomerModal" role="dialog" style="font-family: 'Times New Roman', Times, serif;">
             <div class="modal-dialog">
 
               <!-- Modal content-->

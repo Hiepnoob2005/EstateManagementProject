@@ -60,7 +60,7 @@
     								<div class="form-group">
     									<label class="col-xs-3">Tên khách hàng</label>
     									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "name"/>
+    										<form:input class = "form-control" path = "fullname"/>
     									</div>
     								</div>
 
@@ -68,7 +68,7 @@
     								<div class="form-group">
     									<label class="col-xs-3">Số điện thoại</label>
     									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "phone" name = "phone" value = ""/>
+    										<form:input class = "form-control" path = "customerPhone" name = "customerPhone" value = ""/>
     									</div>
     								</div>
 
@@ -81,7 +81,7 @@
     								<div class="form-group">
     									<label class="col-xs-3">Tên công ty</label>
     									<div class="col-xs-9" >
-    										<form:input class = "form-control" path = "companyname" name = "companyname" value = ""/>
+    										<form:input class = "form-control" path = "companyName" name = "companyName" value = ""/>
     									</div>
     								</div>
     								<div class="form-group">
@@ -95,7 +95,7 @@
     									<div class="col-xs-9" >
                                             <form:select class="form-control" path = "status" name = "status" >
   											<form:option value="">----Chọn Tình Trạng----</form:option>
-  											<form:options items = "${statuss}"> </form:option>
+  											<form:options items = "${statuss}"/>
   								            </form:select>
   									    </div>
     								</div>
@@ -137,88 +137,72 @@
                 </button>
             </div>
                     <c:if test="${item.key == 'CSKH'}">
-                        <div class="col-xs-12">
-                            <table id="simple-table" class="table table-striped table-bordered table-hover">
-                                <thead></thead>
+                    <div class="col-xs-12" >
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Ngày tạo</th>
+                                    <th>Người tạo</th>
+                                    <th>Ngày sửa</th>
+                                    <th>Người sửa</th>
+                                    <th>Chi tiết giao dịch</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                                </thead>
                                 <tbody>
-                                <form:form modelAttribute="transactionListCSKH" method="get">
-                                    <display:table name="transactionListCSKH" cellspacing="0" cellpadding="0"
-                                                   sort="external"
-                                                    defaultsort="2" defaultorder="ascending"
-                                                   id="tableList"
-                                                   export="false"
-                                                   class="table table-fcv-ace table-striped table-bordered table-hover dataTable no-footer"
-                                                   style="margin: 3em 0 1.5em;">
-                                        <display:column title="<fieldset class='form-group'>
-                                                            <input type='checkbox' id='checkAll' class='check-box-element'>
-                                                            </fieldset>" class="center select-cell"
-                                                        headerClass="center select-cell">
-                                            <fieldset>
-                                                <input type="checkbox" name="checkList" value="${tableList.id}"
-                                                       id="checkbox_${tableList.id}" class="check-box-element"/>
-                                            </fieldset>
-                                        </display:column>
-                                        <display:column headerClass="text-left" property="createdDate" title="Ngày tạo"/>
-                                        <display:column headerClass="text-left" property="createdBy" title="Người tạo"/>
-                                        <display:column headerClass="text-left" property="modifiedDate" title="Ngày sửa"/>
-                                        <display:column headerClass="text-left" property="modifiedBy" title="Người sửa"/>
-                                        <display:column headerClass="text-left" property="note" title="Chi tiết giao dịch"/>
-
-                                        <display:column headerClass="col-actions" title="Thao tác">
-                                            <div class="hidden-sm hidden-xs btn-group"></div>
-
-                                            <a class="btn btn-xs btn-info" title="Sửa thông tin giao dịch"
-                                               onclick="UpdateTransaction('${item.key}', ${customerEdit.id});">
-                                                <i class="ace-icon fa fa-pencil bigger-120"></i>
-                                            </a>
-                                        </display:column>
-                                    </display:table>
-                                </form:form>
+                                <c:forEach items="${transactionListCSKH}" var="transaction">
+                                    <tr>
+                                        <td>${transaction.createdDate}</td>
+                                        <td>${transaction.createdBy}</td>
+                                        <td>${transaction.modifiedDate}</td>
+                                        <td>${transaction.modifiedBy}</td>
+                                        <td>${transaction.note}</td>
+                                        <td>
+                                            <button class="btn btn-xs btn-success" title="Sửa thông tin giao dịch" onclick="UpdateTransaction('${item.key}',${transaction.id})">
+                                                <i class="ace-icon glyphicon glyphicon-list"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
+                    </div>
                     </c:if>
                     <c:if test="${item.key == 'DDX'}">
-                        <div class="col-xs-12">
-                            <table id="simple-table" class="table table-striped table-bordered table-hover">
-                                <thead></thead>
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Ngày tạo</th>
+                                    <th>Người tạo</th>
+                                    <th>Ngày sửa</th>
+                                    <th>Người sửa</th>
+                                    <th>Chi tiết giao dịch</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                                </thead>
                                 <tbody>
-                                <form:form modelAttribute="transactionListDDX">
-                                    <display:table name="transactionListDDX" cellspacing="0" cellpadding="0"
-                                                   sort="external"
-                                                    defaultsort="2" defaultorder="ascending"
-                                                   id="tableList"
-                                                   export="false"
-                                                   class="table table-fcv-ace table-striped table-bordered table-hover dataTable no-footer"
-                                                   style="margin: 3em 0 1.5em;">
-                                        <display:column title="<fieldset class='form-group'>
-                                                            <input type='checkbox' id='checkAll' class='check-box-element'>
-                                                            </fieldset>" class="center select-cell"
-                                                        headerClass="center select-cell">
-                                            <fieldset>
-                                                <input type="checkbox" name="checkList" value="${tableList.id}"
-                                                       id="checkbox_${tableList.id}" class="check-box-element"/>
-                                            </fieldset>
-                                        </display:column>
-                                        <display:column headerClass="text-left" property="createdDate" title="Ngày tạo"/>
-                                        <display:column headerClass="text-left" property="createdBy" title="Người tạo"/>
-                                        <display:column headerClass="text-left" property="modifiedDate" title="Ngày sửa"/>
-                                        <display:column headerClass="text-left" property="modifiedBy" title="Người sửa"/>
-                                        <display:column headerClass="text-left" property="note" title="Chi tiết giao dịch"/>
-
-                                        <display:column headerClass="col-actions" title="Thao tác">
-                                            <div class="hidden-sm hidden-xs btn-group"></div>
-
-                                            <a class="btn btn-xs btn-info" title="Sửa thông tin giao dịch"
-                                               onclick="UpdateTransaction('${item.key}', ${customerEdit.id});">
-                                                <i class="ace-icon fa fa-pencil bigger-120"></i>
-                                            </a>
-                                        </display:column>
-                                    </display:table>
-                                </form:form>
+                                <c:forEach items="${transactionListDDX}" var="transactionDDX">
+                                    <tr>
+                                        <td>${transactionDDX.createdDate}</td>
+                                        <td>${transactionDDX.createdBy}</td>
+                                        <td>${transactionDDX.modifiedDate}</td>
+                                        <td>${transactionDDX.modifiedBy}</td>
+                                        <td>${transactionDDX.note}</td>
+                                        <td>
+                                            <button class="btn btn-xs btn-success" title="Sửa thông tin giao dịch" onclick="UpdateTransaction('${item.key}',${transactionDDX.id})">
+                                                <i class="ace-icon glyphicon glyphicon-list"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
+                    </div>
                     </c:if>
         </div>
 
@@ -266,30 +250,21 @@
             $('#customerId').val(customerId);
             $('#code').val(code);
         }
-        function UpdateTransaction(code,id){
-            var customerid = $('#customerId').val();
-            loadTransaction(id, customerid);
-            $('#transactionTypeModal').modal();
-            $('#code').val(code);
-            $('#id').val(id);
-        }
+
 		$('#btnAddOrUpdateTransaction').click(function(e){
             e.preventDefault();
             var data = {};
             data['id'] = $('#id').val();
-            data['customerid'] = $('#customerId').val();
+            data['customerId'] = $('#customerId').val();
             data['code'] = $('#code').val();
             data['note'] = $('#transactionDetail').val();
-            data['createdBy'] = $('#createdBy').val();
-            data['modifiedBy'] = $('#modifiedBy').val();
-            data['createdDate'] = $('#createdDate').val();
-            data['modifiedDate'] = $('#modifiedDate').val();
+
             addOrUpdateTransaction(data);
 		});
 
 
 		function addOrUpdateTransaction(data) {
-		    var customerId = data['customerid'];
+		    var customerId = data['customerId'];
              $.ajax({
 					type: "POST",
                     url: "${customerAPI}/transaction",
@@ -309,13 +284,13 @@
              });
 		}
 
-		#('#btnAddOrUpdateCustomer').click(function() {
+		$('#btnAddOrUpdateCustomer').click(function() {
 		    var data = {};
-		    var formData = $('listForm').serializeArray();
+		    var formData = $('#listForm').serializeArray();
 		    $.each(formData, function(i,v){
                 data["" + v.name + ""] = v.value;
 		    });
-		    if (data['name'] != "" && data['phone'] != ""){
+		    if (data['customerPhone'] != "" && data['fullName'] != ""){
 		        addOrUpdateCustomer(data);
 		    }
 		    else {
@@ -340,7 +315,14 @@
 					}
             });
 		}
-		function loadTransaction (id, customerId){
+        function UpdateTransaction(code,id){
+            var customerid = $('#customerId').val();
+            $('#transactionTypeModal').modal();
+            $('#code').val(code);
+            $('#id').val(id);
+            loadTransaction(id,customerid);
+        }
+		function loadTransaction (id,customerId){
 		    $.ajax({
 		        type: "GET",
 		        url: "${customerAPI}/" + customerId + '/transaction/' + id,

@@ -15,7 +15,8 @@ public class CustomerConverter {
     private ModelMapper modelMapper;
     public CustomerSearchResponse toCustomerSearchResponse(CustomerEntity customer) {
         CustomerSearchResponse customerSearchResponse = modelMapper.map(customer, CustomerSearchResponse.class);
-        customerSearchResponse.setName(customer.getFullName());
+        customerSearchResponse.setFullName(customer.getFullName());
+        customerSearchResponse.setPhone(customer.getPhone());
         if (customer.getStatus() != ""){
             String statusKey = customer.getStatus();
             String statusValue = Status.statusType().get(statusKey);
@@ -25,8 +26,9 @@ public class CustomerConverter {
     }
     public CustomerEntity toCustomerEntity (CustomerDTO customerDTO ){
         CustomerEntity customer = modelMapper.map(customerDTO, CustomerEntity.class);
-        customer.setFullName(customerDTO.getName());
+        customer.setFullName(customerDTO.getFullname());
         customer.setPhone(customerDTO.getCustomerPhone());
+        customer.setCompanyName(customerDTO.getCompanyName());
         if (customerDTO.getStatus() == "" || customerDTO.getStatus() == null){
             customer.setStatus("CHUA_XL");
         }
@@ -34,7 +36,8 @@ public class CustomerConverter {
     }
     public CustomerDTO toCustomerDTO (CustomerEntity customerEntity){
         CustomerDTO customerDTO = modelMapper.map(customerEntity, CustomerDTO.class);
-        customerDTO.setName(customerEntity.getFullName());
+        customerDTO.setFullname(customerEntity.getFullName());
+        customerDTO.setCompanyName(customerEntity.getCompanyName());
         customerDTO.setCustomerPhone(customerEntity.getPhone());
         return customerDTO;
     }

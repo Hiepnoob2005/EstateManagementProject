@@ -3,6 +3,8 @@ package com.javaweb.api.admin;
 import com.javaweb.model.dto.AssignmentCustomerDTO;
 import com.javaweb.model.dto.CustomerDTO;
 import com.javaweb.model.dto.TransactionTypeDTO;
+import com.javaweb.model.request.CustomerSearchRequest;
+import com.javaweb.model.response.CustomerSearchResponse;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.TransactionResponseDTO;
 import com.javaweb.service.IBuildingService;
@@ -10,6 +12,8 @@ import com.javaweb.service.ICustomerService;
 import com.javaweb.service.ITransactionService;
 import com.javaweb.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +27,10 @@ public class CustomerAPI {
     public ITransactionService ITransactionService;
     @Autowired
     public IUserService IUserService;
+    @GetMapping
+    public List<CustomerSearchResponse> findAll(CustomerSearchRequest customerSearchRequest, Pageable pageable){
+        return ICustomerService.findAll(customerSearchRequest, pageable);
+    }
     @PostMapping
     public Boolean addOrUpdateCustomer(@RequestBody CustomerDTO customerDTO){
         ICustomerService.addOrUpdateCustomers(customerDTO);

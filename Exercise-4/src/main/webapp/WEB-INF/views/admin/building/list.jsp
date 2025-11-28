@@ -1,5 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="/common/taglib.jsp" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@include file="/common/taglib.jsp"%>
 <c:url var = "buildingListUrl" value = "/admin/building-list"/>
 <c:url var = "buildingAPI" value = "/api/building"/>
 <html>
@@ -311,11 +311,10 @@
           </div>
 
           <script>
-          		function assignmentBuilding(buildingId) {
+                    function assignmentBuilding(buildingId) {
           			$('#assignmentBuildingModal').modal();
           			loadStaff(buildingId);
           			$('#buildingId').val(buildingId);
-          			//Mở modal “Giao tòa nhà” lên (để chọn nhân viên phụ trách, chẳng hạn).
           		}
           		function loadStaff(buildingId){
                   $.ajax({

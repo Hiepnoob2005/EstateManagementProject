@@ -47,7 +47,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 	@Transactional
 	@Override
 	public List<UserEntity> findUsersByBuilding(BuildingEntity buildingEntity) {
-		String sql = "SELECT * FROM user u JOIN assignmentbuilding a ON a.staffid = u.id JOIN building b ON a.buildingid = b.id where b.id = " + buildingEntity.getId() + "GROUP BY u.id";
+		String sql = "SELECT u.* FROM user u JOIN assignmentbuilding a ON a.staffid = u.id JOIN building b ON a.buildingid = b.id where b.id = " + buildingEntity.getId() + " GROUP BY u.id ";
 		Query query = entityManager.createNativeQuery(sql, UserEntity.class);
 		return query.getResultList();
 	}

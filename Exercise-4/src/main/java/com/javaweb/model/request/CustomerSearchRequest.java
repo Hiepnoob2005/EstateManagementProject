@@ -4,9 +4,9 @@ import com.javaweb.model.dto.AbstractDTO;
 
 public class CustomerSearchRequest extends AbstractDTO {
     private Long id;
-    private String name;
+    private String fullname;
     private String email;
-    private String customerPhone;
+    private String phone;
     private Long staffId;
 
     @Override
@@ -27,12 +27,12 @@ public class CustomerSearchRequest extends AbstractDTO {
         this.staffId = staffId;
     }
 
-    public String getName() {
-        return name;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getEmail() {
@@ -43,11 +43,11 @@ public class CustomerSearchRequest extends AbstractDTO {
         this.email = email;
     }
 
-    public String getCustomerPhone() {
-        return customerPhone;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setCustomerPhone(String customerPhone) {
-        this.customerPhone = customerPhone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
